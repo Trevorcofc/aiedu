@@ -1,0 +1,132 @@
+/* Reset + Base Setup */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Josefin Sans', sans-serif;
+  background-color: #f4f0fa;
+  height: 100vh;
+}
+
+/* Layout Container */
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar Styling */
+.sidebar {
+  width: 220px;
+  background-color: #c4b2e0;
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.sidebar-logo {
+  width: 32px;
+  height: 32px;
+}
+
+.username {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.nav-section p {
+  font-size: 1rem;
+  margin: 20px 0 10px;
+}
+
+.class-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.class-list li button {
+  width: 100%;
+  background-color: #f4f0fa;
+  border: none;
+  padding: 10px;
+  text-align: left;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.class-list li button:hover {
+  background-color: #e1d5f4;
+}
+
+.add-class {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: #5a32a3;
+}
+
+/* Main Content Styling */
+.main-content {
+  flex: 1;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.main-content h1 {
+  font-size: 2.5rem;
+  color: #6636b4;
+  margin-bottom: 20px;
+}
+
+.username-highlight {
+  font-size: 1.5rem;
+  color: #7a4fd1;
+}
+
+/* Big Light Box */
+.content-box {
+  background-color: #eae4f4;
+  flex-grow: 1;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+/* Help Button */
+.bottom-help {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+}
+
+.help-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  box-shadow: 0 0 4px rgba(0,0,0,0.1);
+  transition: background-color 0.2s ease;
+}
+
+.help-button:hover {
+  background-color: #f0e8ff;
+}
