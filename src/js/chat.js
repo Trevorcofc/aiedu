@@ -8,7 +8,7 @@ async function handleChat(event) {
   chatLog.innerHTML += `<p><strong>You:</strong> ${input}</p>`;
 
   try {
-    const response = await fetch("/.netlify/functions/chat", {
+    const response = await fetch("/api/chat", {
 
       method: "POST",
       headers: { "Content-Type": "application/json" },
