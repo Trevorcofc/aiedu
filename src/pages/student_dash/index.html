@@ -34,21 +34,24 @@
     <!-- Main Content -->
     <main class="main-content">
       <h1>Welcome,<br><span class="username-highlight">&lt;username&gt;</span></h1>
-      <div class="content-box"></div>
+
+      <div class="content-box">
+        <div class="chat-interface" id="chat-interface" style="display: none;">
+          <div id="chat-log" class="chat-log"></div>
+          <form onsubmit="handleChat(event)" class="chat-form">
+            <input type="text" id="user-input" placeholder="Ask something..." required />
+            <button type="submit">Send</button>
+          </form>
+        </div>
+      </div>
+
       <div class="bottom-help">
-        <button class="help-button">How can I help?</button>
+        <button class="help-button" onclick="toggleChat()">How can I help?</button>
       </div>
     </main>
   </div>
-  <div class="chat-box">
-  <textarea id="userInput" placeholder="Type something..."></textarea>
-  <button onclick="sendMessage()">Send</button>
-  <pre id="response"></pre>
-</div>
 
-
-    <script src="../../js/chat.js"></script>
-
+  <script src="../../js/chat.js"></script>
 </body>
 </html>
 
