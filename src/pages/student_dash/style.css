@@ -169,4 +169,8 @@ body {
   border-radius: 8px;
   cursor: pointer;
 }
+.logo img {
+  width: 90px; /* adjust size */
+  height: auto;
+}
 
