@@ -15,15 +15,24 @@
 
       const res = await fetch('/.netlify/functions/chat', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'  // ✅ Important fix!
+        },
         body: JSON.stringify({
           messages: [{ role: "user", content: input }]
         })
       });
 
-      const data = await res.json();
-      document.getElementById('response').textContent =
-        data.choices?.[0]?.message?.content || "No response";
+      try {
+        const data = await res.json();
+        document.getElementById('response').textContent =
+          data.choices?.[0]?.message?.content || "No response";
+      } catch (e) {
+        document.getElementById('response').textContent = "Error parsing response.";
+        console.error("Fetch error:", e);
+      }
     }
   </script>
 </body>
 </html>
+
