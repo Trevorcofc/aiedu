@@ -36,9 +36,9 @@
       <h1>Welcome,<br><span class="username-highlight">&lt;username&gt;</span></h1>
 
       <div class="content-box">
-        <div class="chat-interface" id="chat-interface" style="display: none;">
-          <div id="chat-log" class="chat-log"></div>
-          <form onsubmit="handleChat(event)" class="chat-form">
+        <div class="chat-box" id="chat-interface" style="display: none;">
+          <div id="chat-log" class="chat-log" style="white-space: pre-wrap; overflow-y: auto; max-height: 300px;"></div>
+          <form onsubmit="handleChat(event)" class="chat-form" style="margin-top: 10px;">
             <input type="text" id="user-input" placeholder="Ask something..." required />
             <button type="submit">Send</button>
           </form>
@@ -54,4 +54,5 @@
   <script src="../../js/chat.js"></script>
 </body>
 </html>
+
 
