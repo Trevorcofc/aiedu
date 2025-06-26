@@ -1,22 +1,45 @@
 export async function handler(event) {
-  const body = JSON.parse(event.body);
+  try {
+    if (event.httpMethod !== "POST") {
+      return {
+        statusCode: 405,
+        body: "Method Not Allowed",
+      };
+    }
 
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      model: "gpt-3.5-turbo", // or "gpt-4"
-      messages: body.messages,
-    })
-  });
+    const body = JSON.parse(event.body || "{}");
 
-  const data = await response.json();
+    if (!body.messages) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: "Missing 'messages' in request body" }),
+      };
+    }
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify(data),
-  };
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo", // or "gpt-4" if available
+        messages: body.messages,
+      })
+    });
+
+    const data = await response.json();
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(data),
+    };
+
+  } catch (error) {
+    console.error("Chat function error:", error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: "AI response failed" }),
+    };
+  }
 }
