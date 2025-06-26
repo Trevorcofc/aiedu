@@ -16,6 +16,35 @@ export async function handler(event) {
       };
     }
 
+    const userMessage = body.messages[body.messages.length - 1].content;
+
+    // 🚫 Simple guard against direct answer-seeking
+    const bannedWords = [
+      "answer", "solve", "solution", "what's the answer", "give me the answer", "can you solve", "show me the answer"
+    ];
+
+    if (bannedWords.some(w => userMessage.toLowerCase().includes(w))) {
+      return {
+        statusCode: 200,
+        body: JSON.stringify({
+          choices: [{
+            message: {
+              content: "Let’s try solving it together. What have you attempted so far, and where did you feel stuck?"
+            }
+          }]
+        })
+      };
+    }
+
+    // 🧠 System behavior for tutoring, not solving
+    const messages = [
+      {
+        role: "system",
+        content: `You are a thoughtful educational assistant. Never give students direct answers. Instead, guide them with questions, help reframe the problem, and suggest strategies. Encourage learning through prompting and reasoning.`
+      },
+      ...body.messages
+    ];
+
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -23,8 +52,8 @@ export async function handler(event) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "gpt-3.5-turbo", // or "gpt-4" if available
-        messages: body.messages,
+        model: "gpt-3.5-turbo",
+        messages
       })
     });
 
