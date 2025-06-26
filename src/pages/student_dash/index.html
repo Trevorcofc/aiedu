@@ -41,12 +41,11 @@
     </main>
   </div>
   <div class="chat-box">
-  <div id="chat-log"></div>
-  <form onsubmit="handleChat(event)">
-    <input type="text" id="user-input" placeholder="Ask something..." required />
-    <button type="submit">Send</button>
-  </form>
-    </div>
+  <textarea id="userInput" placeholder="Type something..."></textarea>
+  <button onclick="sendMessage()">Send</button>
+  <pre id="response"></pre>
+</div>
+
 
     <script src="../../js/chat.js"></script>
 
