@@ -90,3 +90,7 @@ body {
   color: #1a0c30;
   font-weight: bold;
 }
+.logo img {
+  width: 120px; /* adjust size */
+  height: auto;
+}
