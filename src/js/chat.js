@@ -1,7 +1,16 @@
 // Toggles the visibility of the chat interface
 function toggleChat() {
-  const chatBox = document.querySelector('.chat-box');
-  chatBox.classList.toggle('active');
+  const chatBox = document.getElementById('chat-interface');
+  if (!chatBox) {
+    console.error("Element with id 'chat-interface' not found.");
+    return;
+  }
+
+  if (chatBox.style.display === 'none') {
+    chatBox.style.display = 'flex';
+  } else {
+    chatBox.style.display = 'none';
+  }
 }
 
 // Handles the form-based chat flow
