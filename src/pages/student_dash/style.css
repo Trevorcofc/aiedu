@@ -130,3 +130,43 @@ body {
 .help-button:hover {
   background-color: #f0e8ff;
 }
+.chat-interface {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.chat-log {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+  background: #ffffffa1;
+  padding: 10px;
+  border-radius: 10px;
+  font-family: monospace;
+}
+
+.chat-form {
+  display: flex;
+  gap: 10px;
+}
+
+.chat-form input {
+  flex-grow: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.chat-form button {
+  padding: 10px 15px;
+  background-color: #7a4fd1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
