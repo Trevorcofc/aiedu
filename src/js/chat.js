@@ -1,23 +1,31 @@
-async function handleChat(event) {
-  event.preventDefault();
+async function sendMessage() {
+  const input = document.getElementById('userInput').value;
 
-  const input = document.getElementById("user-input").value;
-  document.getElementById("user-input").value = "";
+  if (!input.trim()) return;
 
-  const chatLog = document.getElementById("chat-log");
-  chatLog.innerHTML += `<p><strong>You:</strong> ${input}</p>`;
+  // Show what the user typed
+  const responseBox = document.getElementById('response');
+  responseBox.textContent = `You: ${input}\nAI: ...`;
 
   try {
-    const response = await fetch("/api/chat", {
-
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: input })
+    const res = await fetch('/.netlify/functions/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        messages: [{ role: "user", content: input }]
+      })
     });
 
-    const data = await response.json();
-    chatLog.innerHTML += `<p><strong>AI:</strong> ${data.reply}</p>`;
+    const data = await res.json();
+
+    const aiResponse = data.choices?.[0]?.message?.content || "Sorry, I couldn’t respond.";
+    responseBox.textContent = `You: ${input}\nAI: ${aiResponse}`;
+
   } catch (err) {
-    chatLog.innerHTML += `<p><strong>AI:</strong> Sorry, I couldn’t respond right now.</p>`;
+    responseBox.textContent = `You: ${input}\nAI: Sorry, there was an error.`;
+    console.error(err);
   }
 }
+
