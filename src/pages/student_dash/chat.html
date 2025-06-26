@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ChatGPT Test</title>
+</head>
+<body>
+  <h1>Ask ChatGPT</h1>
+  <textarea id="userInput" placeholder="Type something..."></textarea>
+  <button onclick="sendMessage()">Send</button>
+  <pre id="response"></pre>
+
+  <script>
+    async function sendMessage() {
+      const input = document.getElementById('userInput').value;
+
+      const res = await fetch('/.netlify/functions/chat', {
+        method: 'POST',
+        body: JSON.stringify({
+          messages: [{ role: "user", content: input }]
+        })
+      });
+
+      const data = await res.json();
+      document.getElementById('response').textContent =
+        data.choices?.[0]?.message?.content || "No response";
+    }
+  </script>
+</body>
+</html>
