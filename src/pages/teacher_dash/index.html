@@ -1,1 +1,56 @@
-<-- html code here ?-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ethicademy Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img src="../../assets/aiedu_logo.png" alt="Logo" class="sidebar-logo" />
+        <div class="username">&lt;user&gt;</div>
+      </div>
+      <nav class="nav-section">
+        <p>Profile</p>
+        <p>Classrooms</p>
+        <ul class="class-list">
+          <li><button>📖 History</button></li>
+          <li><button>🧮 Math</button></li>
+          <li><button>✏️ English</button></li>
+          <li><button>⚗️ Science</button></li>
+          <li class="add-class">
+            <button>➕ Add New</button>
+          </li>
+        </ul>
+        <p>Other</p>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <h1>Welcome,<br><span class="username-highlight">&lt;username&gt;</span></h1>
+
+      <div class="content-box">
+        <div class="chat-box" id="chat-interface" style="display: none;">
+          <div id="chat-log" class="chat-log" style="white-space: pre-wrap; overflow-y: auto; max-height: 300px;"></div>
+          <form onsubmit="handleChat(event)" class="chat-form" style="margin-top: 10px;">
+            <input type="text" id="user-input" placeholder="Ask something..." required />
+            <button type="submit">Send</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="bottom-help">
+        <button class="help-button" onclick="toggleChat()">How can I help?</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="../../js/chat.js"></script>
+</body>
+</html>
