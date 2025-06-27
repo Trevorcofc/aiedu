@@ -108,11 +108,12 @@ body {
   margin-bottom: 20px;
 }
 
-/* Help Button */
+/* Help Button CHANGE to login notification later */
 .bottom-help {
   position: absolute;
   bottom: 30px;
-  right: 30px;
+  left: 50%;
+  transform: translateX(calc(-50% + 20px));
 }
 
 .help-button {
