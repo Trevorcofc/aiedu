@@ -52,6 +52,34 @@
   </div>
 
   <script src="../../js/chat.js"></script>
+
+  <!-- Join Class Modal -->
+<div id="join-class-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" id="close-join-class">&times;</span>
+    <h2>Join a Class</h2>
+    <form id="join-class-form">
+      <label for="join-class-code">Enter Class Code:</label>
+      <input type="text" id="join-class-code" name="join-class-code" required>
+      <button type="submit">Add Class</button>
+    </form>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div id="student-success-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" id="close-student-success">&times;</span>
+    <h2>Success!</h2>
+    <p>You have successfully joined the class.</p>
+    <button id="student-success-ok-btn">OK</button>
+  </div>
+</div>
+
+<script src="../../js/student_dash.js"></script>
+
+
+  
 </body>
 </html>
 
