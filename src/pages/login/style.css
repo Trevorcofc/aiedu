@@ -73,6 +73,17 @@ body {
   background-color: #4b2591;
 }
 
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.button-group button {
+  width: 40%;
+}
+
 /* Signup Box */
 .signup-box {
   background-color: #b39ddb;
