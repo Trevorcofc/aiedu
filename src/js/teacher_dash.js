@@ -1,3 +1,40 @@
+// teacher_dash.js
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+// ✅ Your Firebase config from Firebase Console
+const firebaseConfig = {
+  apiKey: "AIzaSyAN5bczyFGapDT9vcqOAxI473SLUDfSHxA",
+  authDomain: "ethicadmey.firebaseapp.com",
+  projectId: "ethicadmey",
+  storageBucket: "ethicadmey.firebasestorage.app",
+  messagingSenderId: "281835928268",
+  appId: "1:281835928268:web:49d817295d84b409c6e069",
+  measurementId: "G-P860XXWVPR"
+};
+
+// ✅ Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getFirestore(app);
+
+// ✅ Firestore function to save a new class
+async function addNewClass(title, description, classCode) {
+  try {
+    await addDoc(collection(db, "classes"), {
+      title: title,
+      description: description,
+      classCode: classCode,
+      createdAt: new Date().toISOString()
+    });
+    console.log("Class saved to Firestore!");
+  } catch (e) {
+    console.error("Error adding class:", e);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const addNewBtn = document.querySelector(".add-class button");
   const addCourseModal = document.getElementById("add-course-modal");
@@ -20,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Handle Add Course form submission
-  addCourseForm.addEventListener("submit", (e) => {
+  addCourseForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const title = document.getElementById("course-title").value.trim();
@@ -33,25 +70,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const classCode = generateClassCode();
 
-    // Add new course to sidebar
+    // Add new course to sidebar UI
     const newLi = document.createElement("li");
     const newBtn = document.createElement("button");
     newBtn.textContent = `📚 ${title}`;
     newLi.appendChild(newBtn);
     classList.insertBefore(newLi, classList.querySelector(".add-class"));
 
-    // Show success modal
+    // Show success modal with generated code
     classCodeSpan.textContent = classCode;
     addCourseModal.style.display = "none";
     successModal.style.display = "block";
 
-    // Optionally store your class somewhere (local storage, database, etc.)
-    // For MVP you could simply log:
-    console.log({
-      title,
-      description,
-      classCode
-    });
+    // ✅ Save new class to Firestore
+    await addNewClass(title, description, classCode);
 
     // Reset form
     addCourseForm.reset();
@@ -68,10 +100,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Utility: generate random class code
   function generateClassCode() {
-    // Generates something like ABC123
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const numbers = "0123456789";
-
     let code = "";
     for (let i = 0; i < 3; i++) {
       code += letters.charAt(Math.floor(Math.random() * letters.length));
@@ -82,3 +112,4 @@ document.addEventListener("DOMContentLoaded", () => {
     return code;
   }
 });
+
