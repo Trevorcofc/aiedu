@@ -143,20 +143,6 @@ document.addEventListener("DOMContentLoaded", () => {
     chatLog.scrollTop = chatLog.scrollHeight;
   }
 
-  // Handle chat submit (GLOBAL FUNCTION for onsubmit)
-  window.handleChat = function (event) {
-    event.preventDefault();
+  window.handleChat = handleChat;
 
-    const text = userInput.value.trim();
-    if (!text) return;
-
-    addMessage("user", text);
-
-    // Fake AI response
-    setTimeout(() => {
-      addMessage("ai", "Of course! Just tell me what you need help with!");
-    }, 600);
-
-    userInput.value = "";
-  };
 });
