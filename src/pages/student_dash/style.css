@@ -20,18 +20,19 @@ body {
 /* Sidebar Styling */
 .sidebar {
   width: 220px;
-  background: rgba(196, 178, 224, 0.2); /* translucent version of your original color */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.08); /* subtle, elegant transparency */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 20px 15px;
   display: flex;
   flex-direction: column;
   justify-content: start;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.3); /* optional subtle border */
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* optional subtle shadow */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* very subtle edge highlight */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* soft shadow for depth */
 }
+
 
 
 .sidebar-header {
