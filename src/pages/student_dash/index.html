@@ -32,57 +32,62 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="main-content">
-      <h1>Welcome,<br><span class="username-highlight">&lt;username&gt;</span></h1>
+    <main class="chat-main">
+      <header class="chat-header">
+        <h1>Welcome, <span class="username-highlight">&lt;username&gt;</span></h1>
+      </header>
 
-      <div class="content-box">
-        <div class="chat-box" id="chat-interface" style="display: none;">
-          <div id="chat-log" class="chat-log" style="white-space: pre-wrap; overflow-y: auto; max-height: 300px;"></div>
-          <form onsubmit="handleChat(event)" class="chat-form" style="margin-top: 10px;">
-            <input type="text" id="user-input" placeholder="Ask something..." required />
+      <div class="chat-container">
+        <!-- Chat messages panel -->
+        <section class="chat-panel">
+          <div id="chat-log" class="chat-log"></div>
+
+          <form onsubmit="handleChat(event)" class="chat-form">
+            <input type="text" id="user-input" placeholder="Ask me anything..." required />
             <button type="submit">Send</button>
           </form>
-        </div>
-      </div>
+        </section>
 
-      <div class="bottom-help">
-        <button class="help-button" onclick="toggleChat()">How can I help?</button>
+        <!-- Suggested prompts panel -->
+        <aside class="suggested-panel">
+          <h3>Suggested Prompts</h3>
+          <div class="suggested-list" id="suggested-list">
+            <div class="suggested-item">
+              AI: Try asking, “Can you help me visualize this?”
+            </div>
+          </div>
+        </aside>
       </div>
     </main>
   </div>
 
+  <!-- Modals from your original file -->
+  <div id="join-class-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="close-join-class">&times;</span>
+      <h2>Join a Class</h2>
+      <form id="join-class-form">
+        <label for="join-class-code">Enter Class Code:</label>
+        <input type="text" id="join-class-code" name="join-class-code" required>
+        <button type="submit">Add Class</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="student-success-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="close-student-success">&times;</span>
+      <h2>Success!</h2>
+      <p>You have successfully joined the class.</p>
+      <button id="student-success-ok-btn">OK</button>
+    </div>
+  </div>
+
   <script src="../../js/chat.js"></script>
-
-  <!-- Join Class Modal -->
-<div id="join-class-modal" class="modal">
-  <div class="modal-content">
-    <span class="close-btn" id="close-join-class">&times;</span>
-    <h2>Join a Class</h2>
-    <form id="join-class-form">
-      <label for="join-class-code">Enter Class Code:</label>
-      <input type="text" id="join-class-code" name="join-class-code" required>
-      <button type="submit">Add Class</button>
-    </form>
-  </div>
-</div>
-
-<!-- Success Modal -->
-<div id="student-success-modal" class="modal">
-  <div class="modal-content">
-    <span class="close-btn" id="close-student-success">&times;</span>
-    <h2>Success!</h2>
-    <p>You have successfully joined the class.</p>
-    <button id="student-success-ok-btn">OK</button>
-  </div>
-</div>
-
-<script src="../../js/student_dash.js"></script>
-<script type="module" src="../../js/student_dash.js"></script>
-
-
-
-  
+  <script src="../../js/student_dash.js"></script>
+  <script type="module" src="../../js/student_dash.js"></script>
 </body>
 </html>
+
 
 
