@@ -143,6 +143,35 @@ document.addEventListener("DOMContentLoaded", () => {
     chatLog.scrollTop = chatLog.scrollHeight;
   }
 
-  window.handleChat = handleChat;
+  window.handleChat = async function (event) {
+  event.preventDefault();
+
+  const text = userInput.value.trim();
+  if (!text) return;
+
+  addMessage("user", text);
+
+  try {
+    const res = await fetch('/.netlify/functions/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        messages: [{ role: "user", content: text }]
+      })
+    });
+
+    const data = await res.json();
+    const reply = data.choices?.[0]?.message?.content || "Sorry, I couldn’t respond.";
+    addMessage("ai", reply);
+  } catch (error) {
+    console.error(error);
+    addMessage("ai", "Sorry, there was an error talking to the AI.");
+  }
+
+  userInput.value = "";
+};
+
 
 });
