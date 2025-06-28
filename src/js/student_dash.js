@@ -133,12 +133,21 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector(".chat-panel").style.display = "flex";
   }
 
-  // Handle chat submit
+  // Add message bubble
+  function addMessage(sender, text) {
+    const bubble = document.createElement("div");
+    bubble.classList.add("chat-bubble");
+    bubble.classList.add(sender === "user" ? "user" : "ai");
+    bubble.textContent = sender === "user" ? `User: ${text}` : `AI: ${text}`;
+    chatLog.appendChild(bubble);
+    chatLog.scrollTop = chatLog.scrollHeight;
+  }
+
+  // Handle chat submit (GLOBAL FUNCTION for onsubmit)
   window.handleChat = function (event) {
     event.preventDefault();
 
     const text = userInput.value.trim();
-
     if (!text) return;
 
     addMessage("user", text);
@@ -150,15 +159,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     userInput.value = "";
   };
-
-  // Function to add message bubble
-  function addMessage(sender, text) {
-    const bubble = document.createElement("div");
-    bubble.classList.add("chat-bubble");
-    bubble.classList.add(sender === "user" ? "user" : "ai");
-    bubble.textContent =
-      sender === "user" ? `User: ${text}` : `AI: ${text}`;
-    chatLog.appendChild(bubble);
-    chatLog.scrollTop = chatLog.scrollHeight;
-  }
 });
