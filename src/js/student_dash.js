@@ -37,6 +37,9 @@ async function checkClassCode(code) {
   }
 }
 
+// Storage for joined classes
+const joinedClasses = [];
+
 document.addEventListener("DOMContentLoaded", () => {
   const addNewBtn = document.querySelector(".add-class button");
   const joinClassModal = document.getElementById("join-class-modal");
@@ -46,6 +49,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeSuccessModal = document.getElementById("close-student-success");
   const successOkBtn = document.getElementById("student-success-ok-btn");
   const classList = document.querySelector(".class-list");
+
+  const chatLog = document.getElementById("chat-log");
+  const userInput = document.getElementById("user-input");
+
+  let currentClassContext = null;
 
   // Show Join Class modal
   addNewBtn.addEventListener("click", () => {
@@ -68,28 +76,25 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // ✅ Check Firestore for matching class
     const matchedClass = await checkClassCode(classCode);
 
     if (matchedClass) {
-      // ✅ Add class to sidebar
-      const newLi = document.createElement("li");
-      const newBtn = document.createElement("button");
-      newBtn.textContent = `📚 ${matchedClass.title}`;
-      newLi.appendChild(newBtn);
-      classList.insertBefore(newLi, classList.querySelector(".add-class"));
-
-      joinClassModal.style.display = "none";
-      successModal.style.display = "block";
+      // Check if class already exists in sidebar
+      if (joinedClasses.some((cls) => cls.classCode === matchedClass.classCode)) {
+        alert("Class already added.");
+      } else {
+        addClassToSidebar(matchedClass);
+        joinedClasses.push(matchedClass);
+        joinClassModal.style.display = "none";
+        successModal.style.display = "block";
+      }
     } else {
       alert("Invalid class code. Please try again.");
     }
 
-    // Reset form
     joinClassForm.reset();
   });
 
-  // Close success modal
   closeSuccessModal.addEventListener("click", () => {
     successModal.style.display = "none";
   });
@@ -97,4 +102,63 @@ document.addEventListener("DOMContentLoaded", () => {
   successOkBtn.addEventListener("click", () => {
     successModal.style.display = "none";
   });
+
+  // Add class to sidebar and attach click listener
+  function addClassToSidebar(classData) {
+    const newLi = document.createElement("li");
+    const newBtn = document.createElement("button");
+    newBtn.textContent = `📚 ${classData.title}`;
+    newBtn.dataset.classCode = classData.classCode;
+
+    newBtn.addEventListener("click", () => {
+      switchClassContext(classData);
+    });
+
+    newLi.appendChild(newBtn);
+    classList.insertBefore(newLi, classList.querySelector(".add-class"));
+  }
+
+  // Switch the current chat context
+  function switchClassContext(classData) {
+    currentClassContext = classData;
+
+    // Update welcome header
+    const headerTitle = document.querySelector(".chat-header h1");
+    headerTitle.innerHTML = `Welcome,<br><span class="username-highlight">&lt;username&gt;</span><br><small>Class: ${classData.title}</small>`;
+
+    // Clear previous chat log
+    chatLog.innerHTML = "";
+
+    // Show chat interface
+    document.querySelector(".chat-panel").style.display = "flex";
+  }
+
+  // Handle chat submit
+  window.handleChat = function (event) {
+    event.preventDefault();
+
+    const text = userInput.value.trim();
+
+    if (!text) return;
+
+    addMessage("user", text);
+
+    // Fake AI response
+    setTimeout(() => {
+      addMessage("ai", "Of course! Just tell me what you need help with!");
+    }, 600);
+
+    userInput.value = "";
+  };
+
+  // Function to add message bubble
+  function addMessage(sender, text) {
+    const bubble = document.createElement("div");
+    bubble.classList.add("chat-bubble");
+    bubble.classList.add(sender === "user" ? "user" : "ai");
+    bubble.textContent =
+      sender === "user" ? `User: ${text}` : `AI: ${text}`;
+    chatLog.appendChild(bubble);
+    chatLog.scrollTop = chatLog.scrollHeight;
+  }
 });
