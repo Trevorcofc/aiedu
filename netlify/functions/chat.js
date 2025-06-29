@@ -107,10 +107,15 @@ export async function handler(event) {
 
     const data = await response.json();
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify(data),
+   const content = data.choices?.[0]?.message?.content || "";
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify({
+    text: content,
+      }),
     };
+
 
   } catch (error) {
     console.error("Chat function error:", error);
