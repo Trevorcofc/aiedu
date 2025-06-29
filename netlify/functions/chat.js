@@ -1,3 +1,5 @@
+import fetch from "node-fetch";
+
 export async function handler(event) {
   try {
     if (event.httpMethod !== "POST") {
@@ -18,9 +20,10 @@ export async function handler(event) {
 
     const userMessage = body.messages[body.messages.length - 1].content;
 
-    // 🚫 Simple guard against direct answer-seeking
+    // 🚫 Guard against direct answer-seeking
     const bannedWords = [
-      "answer", "solve", "solution", "what's the answer", "give me the answer", "can you solve", "show me the answer"
+      "answer", "solve", "solution", "what's the answer",
+      "give me the answer", "can you solve", "show me the answer"
     ];
 
     if (bannedWords.some(w => userMessage.toLowerCase().includes(w))) {
@@ -34,6 +37,51 @@ export async function handler(event) {
           }]
         })
       };
+    }
+
+    // ✅ Check if the user is requesting an image
+    const imageKeywords = [
+      "draw", "picture", "image", "diagram", "illustrate", "visualize", "sketch"
+    ];
+
+    if (imageKeywords.some(w => userMessage.toLowerCase().includes(w))) {
+      // Call DALL·E image generation
+      const dalleResponse = await fetch("https://api.openai.com/v1/images/generations", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: "dall-e-3",
+          prompt: userMessage,
+          n: 1,
+          size: "512x512"
+        })
+      });
+
+      const dalleData = await dalleResponse.json();
+
+      if (dalleData.data?.[0]?.url) {
+        return {
+          statusCode: 200,
+          body: JSON.stringify({
+            image_url: dalleData.data[0].url
+          }),
+        };
+      } else {
+        console.error("DALL·E response error:", dalleData);
+        return {
+          statusCode: 200,
+          body: JSON.stringify({
+            choices: [{
+              message: {
+                content: "I tried generating an image, but something went wrong."
+              }
+            }]
+          })
+        };
+      }
     }
 
     // 🧠 System behavior for tutoring, not solving
@@ -72,3 +120,4 @@ export async function handler(event) {
     };
   }
 }
+
