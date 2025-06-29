@@ -55,17 +55,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let currentClassContext = null;
 
-  // Show Join Class modal
   addNewBtn.addEventListener("click", () => {
     joinClassModal.style.display = "block";
   });
 
-  // Close Join Class modal
   closeJoinClass.addEventListener("click", () => {
     joinClassModal.style.display = "none";
   });
 
-  // Handle Join Class form submit
   joinClassForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -136,7 +133,6 @@ document.addEventListener("DOMContentLoaded", () => {
     chatLog.scrollTop = chatLog.scrollHeight;
   }
 
-  // ✅ NEW → Add an image message bubble
   function addImageMessage(sender, imageUrl) {
     const bubble = document.createElement("div");
     bubble.classList.add("chat-bubble");
@@ -176,8 +172,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (data.image_url) {
         addImageMessage("ai", data.image_url);
-      } else if (data.choices?.[0]?.message?.content) {
-        addMessage("ai", data.choices[0].message.content);
+      } else if (data.text) {
+        addMessage("ai", data.text);
       } else {
         addMessage("ai", "Sorry, I didn’t understand the request.");
       }
