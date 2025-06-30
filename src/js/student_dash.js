@@ -1,5 +1,3 @@
-// student_dash.js
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
 import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
@@ -55,14 +53,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let currentClassContext = null;
 
+  // Show Join Class modal
   addNewBtn.addEventListener("click", () => {
     joinClassModal.style.display = "block";
   });
 
+  // Close Join Class modal
   closeJoinClass.addEventListener("click", () => {
     joinClassModal.style.display = "none";
   });
 
+  // Handle Join Class form submit
   joinClassForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -76,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const matchedClass = await checkClassCode(classCode);
 
     if (matchedClass) {
+      // Check if class already exists in sidebar
       if (joinedClasses.some((cls) => cls.classCode === matchedClass.classCode)) {
         alert("Class already added.");
       } else {
@@ -99,6 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
     successModal.style.display = "none";
   });
 
+  // Add class to sidebar and attach click listener
   function addClassToSidebar(classData) {
     const newLi = document.createElement("li");
     const newBtn = document.createElement("button");
@@ -113,17 +116,22 @@ document.addEventListener("DOMContentLoaded", () => {
     classList.insertBefore(newLi, classList.querySelector(".add-class"));
   }
 
+  // Switch the current chat context
   function switchClassContext(classData) {
     currentClassContext = classData;
 
+    // Update welcome header
     const headerTitle = document.querySelector(".chat-header h1");
     headerTitle.innerHTML = `Welcome,<br><span class="username-highlight">&lt;username&gt;</span><br><small>Class: ${classData.title}</small>`;
 
+    // Clear previous chat log
     chatLog.innerHTML = "";
 
+    // Show chat interface
     document.querySelector(".chat-panel").style.display = "flex";
   }
 
+  // Add message bubble
   function addMessage(sender, text) {
     const bubble = document.createElement("div");
     bubble.classList.add("chat-bubble");
@@ -133,57 +141,36 @@ document.addEventListener("DOMContentLoaded", () => {
     chatLog.scrollTop = chatLog.scrollHeight;
   }
 
-  function addImageMessage(sender, imageUrl) {
-    const bubble = document.createElement("div");
-    bubble.classList.add("chat-bubble");
-    bubble.classList.add(sender === "user" ? "user" : "ai");
+  window.handleChat = async function (event) {
+  event.preventDefault();
 
-    const img = document.createElement("img");
-    img.src = imageUrl;
-    img.alt = "AI generated image";
-    img.style.maxWidth = "300px";
-    img.style.borderRadius = "8px";
+  const text = userInput.value.trim();
+  if (!text) return;
 
-    bubble.appendChild(img);
-    chatLog.appendChild(bubble);
-    chatLog.scrollTop = chatLog.scrollHeight;
+  addMessage("user", text);
+
+  try {
+    const res = await fetch('/.netlify/functions/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        messages: [{ role: "user", content: text }]
+      })
+    });
+
+    const data = await res.json();
+    const reply = data.choices?.[0]?.message?.content || "Sorry, I couldn’t respond.";
+    addMessage("ai", reply);
+  } catch (error) {
+    console.error(error);
+    addMessage("ai", "Sorry, there was an error talking to the AI.");
   }
 
-  window.handleChat = async function (event) {
-    event.preventDefault();
+  userInput.value = "";
+};
 
-    const text = userInput.value.trim();
-    if (!text) return;
-
-    addMessage("user", text);
-
-    try {
-      const res = await fetch('/.netlify/functions/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          messages: [{ role: "user", content: text }]
-        })
-      });
-
-      const data = await res.json();
-
-      if (data.image_url) {
-        addImageMessage("ai", data.image_url);
-      } else if (data.text) {
-        addMessage("ai", data.text);
-      } else {
-        addMessage("ai", "Sorry, I didn’t understand the request.");
-      }
-    } catch (error) {
-      console.error(error);
-      addMessage("ai", "Sorry, there was an error talking to the AI.");
-    }
-
-    userInput.value = "";
-  };
 
 });
 
