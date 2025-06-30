@@ -80,6 +80,27 @@ body {
   color: #5a32a3;
 }
 
+/*style for links to look like buttons */
+.class-list li a {
+  display: block;
+  width: 100%;
+  background-color: #f4f0fa;
+  border: none;
+  padding: 10px;
+  text-align: left;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-decoration: none; /* removes underline */
+  color: inherit; /* matches surrounding text color */
+  transition: background-color 0.2s ease;
+}
+
+.class-list li a:hover {
+  background-color: #e1d5f4;
+}
+
+
 /* Main Content Styling */
 .main-content {
   flex: 1;
