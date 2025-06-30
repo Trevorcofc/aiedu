@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Dummy data for now
   const coursesData = {
     history: {
       classCode: "HX2345",
@@ -35,14 +34,30 @@ document.addEventListener("DOMContentLoaded", () => {
         "Essay Writing",
         "Poetry Analysis",
       ]
+    },
+    science: {
+      classCode: "SC1122",
+      amountAdmitted: 20,
+      materials: [
+        "Introduction to Physics",
+        "Basic Chemistry Concepts",
+        "Biology Fundamentals"
+      ]
     }
   };
 
-  const data = coursesData[courseName];
+  function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  const key = courseName.toLowerCase();
+  const data = coursesData[key];
 
   if (data) {
-    document.getElementById("course-title").textContent =
-      courseName.charAt(0).toUpperCase() + courseName.slice(1);
+    const titleEl = document.getElementById("course-title");
+    if (titleEl) {
+      titleEl.textContent = capitalize(courseName);
+    }
 
     document.getElementById("admitted-count").textContent = data.amountAdmitted;
     document.getElementById("class-code").textContent = data.classCode;
