@@ -8,7 +8,6 @@
 body {
   font-family: 'Josefin Sans', sans-serif;
   background-color: #f4f0fa;
-  height: 100vh;
 }
 
 /* Layout Container */
@@ -58,30 +57,7 @@ body {
   gap: 10px;
 }
 
-.class-list li button {
-  width: 100%;
-  background-color: #f4f0fa;
-  border: none;
-  padding: 10px;
-  text-align: left;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.class-list li button:hover {
-  background-color: #e1d5f4;
-}
-
-.add-class {
-  margin-top: 10px;
-  font-size: 0.85rem;
-  color: #5a32a3;
-}
-
-/*style for links to look like buttons */
-.class-list li a {
+.class-list li .class-button {
   display: block;
   width: 100%;
   background-color: #f4f0fa;
@@ -91,18 +67,23 @@ body {
   border-radius: 8px;
   font-size: 0.95rem;
   cursor: pointer;
-  text-decoration: none; /* removes underline */
-  color: inherit; /* matches surrounding text color */
+  text-decoration: none;
+  color: inherit;
   transition: background-color 0.2s ease;
 }
 
-.class-list li a:hover {
+.class-list li .class-button:hover {
   background-color: #e1d5f4;
 }
 
+.add-class {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: #5a32a3;
+}
 
 /* Main Content Styling */
-.main-content {
+.chat-main {
   flex: 1;
   padding: 30px;
   display: flex;
@@ -110,7 +91,7 @@ body {
   position: relative;
 }
 
-.main-content h1 {
+.chat-main h1 {
   font-size: 2.5rem;
   color: #6636b4;
   margin-bottom: 20px;
@@ -129,7 +110,7 @@ body {
   margin-bottom: 20px;
 }
 
-/* Help Button CHANGE to login notification later */
+/* Help Button */
 .bottom-help {
   position: absolute;
   bottom: 30px;
@@ -152,6 +133,8 @@ body {
 .help-button:hover {
   background-color: #f0e8ff;
 }
+
+/* Chat Interface */
 .chat-interface {
   display: flex;
   flex-direction: column;
@@ -191,11 +174,13 @@ body {
   border-radius: 8px;
   cursor: pointer;
 }
+
 .logo img {
-  width: 90px; /* adjust size */
+  width: 90px;
   height: auto;
 }
-/* Basic modal styles */
+
+/* Modal Styles */
 .modal {
   display: none;
   position: fixed;
@@ -214,7 +199,6 @@ body {
   padding: 20px;
   width: 300px;
   border-radius: 5px;
-  font-family: 'Josefin Sans', sans-serif;
 }
 
 .close-btn {
