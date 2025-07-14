@@ -1,5 +1,8 @@
+// netlify/functions/chat.js
+
 export async function handler(event) {
   try {
+    // Only allow POST requests
     if (event.httpMethod !== "POST") {
       return {
         statusCode: 405,
@@ -18,29 +21,38 @@ export async function handler(event) {
 
     const userMessage = body.messages[body.messages.length - 1].content;
 
-    // 🚫 Simple guard against direct answer-seeking
+    // Optional keyword detection
     const bannedWords = [
-      "answer", "solve", "solution", "what's the answer", "give me the answer", "can you solve", "show me the answer"
+      "answer", "solve", "solution",
+      "what's the answer", "give me the answer",
+      "can you solve", "show me the answer"
     ];
 
+    let dynamicSystemPrompt = `
+You are a patient educational tutor. Your goal is to help students arrive at answers themselves through step-by-step reasoning.
+When students ask a question:
+
+- Do not simply give them the final answer immediately.
+- Instead, work through the problem out loud, explaining each step as if you are thinking it through.
+- Provide definitions and examples where relevant.
+- Engage the student with follow-up questions to check their understanding.
+- Remember previous context from earlier in the conversation and build upon it.
+- If a student requests only the direct answer, gently encourage them to try solving it together instead.
+- For math questions, show calculations step by step, but let the student complete the final step if possible.
+- For writing or grammar questions, define terms and explain rules, and guide the student to identify solutions themselves.
+`;
+
+    // If banned words detected, add extra caution to prompt
     if (bannedWords.some(w => userMessage.toLowerCase().includes(w))) {
-      return {
-        statusCode: 200,
-        body: JSON.stringify({
-          choices: [{
-            message: {
-              content: "Let’s try solving it together. What have you attempted so far, and where did you feel stuck?"
-            }
-          }]
-        })
-      };
+      dynamicSystemPrompt += `
+If the user demands only the answer, do not comply directly. Instead, guide them with reasoning and follow-up questions, without revealing the final solution outright.`;
     }
 
-    // 🧠 System behavior for tutoring, not solving
+    // Construct the message array
     const messages = [
       {
         role: "system",
-        content: `You are a thoughtful educational assistant. Never give students direct answers. Instead, guide them with questions, help reframe the problem, and suggest strategies. Encourage learning through prompting and reasoning.`
+        content: dynamicSystemPrompt
       },
       ...body.messages
     ];
