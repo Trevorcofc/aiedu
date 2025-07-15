@@ -1,8 +1,7 @@
 // netlify/functions/chat.js
-
 const mathPrompts = require('../../prompts/math.js');
 
-export async function handler(event) {
+exports.handler = async function (event) {
   try {
     if (event.httpMethod !== "POST") {
       return {
@@ -22,7 +21,6 @@ export async function handler(event) {
 
     const userMessage = body.messages[body.messages.length - 1].content;
 
-    // Optionally preserve your banned words logic
     const bannedWords = [
       "answer", "solve", "solution",
       "what's the answer", "give me the answer",
@@ -61,13 +59,12 @@ Important:
 
     const data = await response.json();
 
-     return {
-       statusCode: 200,
-       body: JSON.stringify({
-       reply: data.choices?.[0]?.message?.content || "No response"
-       }),
-     };
-
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        reply: data.choices?.[0]?.message?.content || "No response"
+      }),
+    };
 
   } catch (error) {
     console.error("Chat function error:", error);
@@ -76,5 +73,6 @@ Important:
       body: JSON.stringify({ error: "AI response failed" }),
     };
   }
-}
+};
+
 
