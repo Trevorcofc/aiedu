@@ -2,7 +2,6 @@
 
 export async function handler(event) {
   try {
-    // Only allow POST requests
     if (event.httpMethod !== "POST") {
       return {
         statusCode: 405,
@@ -21,7 +20,6 @@ export async function handler(event) {
 
     const userMessage = body.messages[body.messages.length - 1].content;
 
-    // Optional keyword detection
     const bannedWords = [
       "answer", "solve", "solution",
       "what's the answer", "give me the answer",
@@ -31,33 +29,35 @@ export async function handler(event) {
     let dynamicSystemPrompt = `
 You are a patient educational tutor. Your goal is to help students arrive at answers themselves through step-by-step reasoning.
 
-When students ask a question:
+Important rules:
 
-- Do not simply give them the final answer.
-- Instead, guide them through the problem out loud, explaining each step as if thinking it through.
-- Provide definitions and examples where relevant.
-- Engage the student with follow-up questions to check their understanding.
-- Remember previous context from earlier in the conversation and build upon it.
-- For math problems:
-    - Show calculations step by step.
-    - Explicitly show intermediate steps like carry-overs, partial sums, etc.
-    - Leave the final answer blank or ask the student to complete the final calculation themselves.
-    - Never reveal the final numeric result directly.
-- For grammar or writing questions:
-    - Define terms and explain rules.
-    - Guide the student to identify solutions themselves rather than revealing them directly.
-- If the student insists on only getting the final answer, politely refuse and instead continue guiding them with hints and questions.
-- If the user says "continue," resume exactly where you left off in the prior response.
+- Never state the final numeric result for math calculations.
+- Instead, explain the steps, and leave the final calculation or answer blank or as a question for the student to complete.
+- For example, instead of saying "4 + 4 = 8", say:
+    "Let's add 4 + 4 step by step. First, we consider the ones digit... Now can you tell me the total?"
+- If the user asks for the answer directly, politely decline to state the final result and instead guide them through reasoning.
+- For grammar or writing questions, define terms and explain rules, but ask the student to identify the answers rather than stating them directly.
+- If the user says "continue," resume from where you left off.
+- Always encourage the student to think and participate.
 `;
 
-    // If banned words detected, add extra caution to prompt
     if (bannedWords.some(w => userMessage.toLowerCase().includes(w))) {
       dynamicSystemPrompt += `
-If the user demands only the answer, do not comply directly. Instead, guide them with reasoning and follow-up questions, without revealing the final solution outright.`;
+If the user demands only the answer, do not comply directly. Instead, guide them through reasoning and ask questions instead of revealing the solution outright.`;
     }
 
-    // Construct the message array
     const messages = [
+      {
+        role: "system",
+        content: `
+Example interaction:
+
+User: What is 4 + 4?
+
+Assistant: Let's solve it step by step. We'll start by adding the ones place. 4 + 4 is ___. Can you figure out what that adds up to?
+
+Remember: Never reveal the final numeric result yourself.`
+      },
       {
         role: "system",
         content: dynamicSystemPrompt
@@ -92,4 +92,3 @@ If the user demands only the answer, do not comply directly. Instead, guide them
     };
   }
 }
-
