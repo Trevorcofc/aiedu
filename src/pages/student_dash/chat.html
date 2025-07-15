@@ -37,7 +37,8 @@
         const data = await res.json();
 
         // Grab the AI's reply
-        const aiMessage = data.choices?.[0]?.message?.content || "No response";
+        const aiMessage = data.reply || "No response";
+
 
         // Add AI message to history
         chatHistory.push({
