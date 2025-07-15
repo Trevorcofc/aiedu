@@ -182,6 +182,38 @@ body {
   border: 1px solid #d9c9f2;
 }
 
+/* NEW: Rich formatting inside AI bubbles */
+.chat-bubble.ai h2 {
+  font-size: 1.3rem;
+  color: #6636b4;
+  margin: 10px 0 6px;
+  line-height: 1.3;
+}
+
+.chat-bubble.ai p {
+  margin: 6px 0;
+  line-height: 1.5;
+}
+
+.chat-bubble.ai ul {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.chat-bubble.ai li {
+  margin-bottom: 4px;
+}
+
+.chat-bubble.ai strong {
+  color: #7a4fd1;
+  font-weight: bold;
+}
+
+.chat-bubble.ai emoji {
+  font-size: 1.2em;
+  margin-right: 4px;
+}
+
 /* CHAT INPUT */
 .chat-form {
   display: flex;
@@ -239,6 +271,7 @@ body {
   color: #2d1557;
   font-size: 0.9rem;
 }
+
 
 
 
