@@ -34,7 +34,8 @@
       });
 
       try {
-        const data = await res.json();
+        console.log("RAW BACKEND RESPONSE:", data);
+
 
         // Grab the AI's reply
         const aiMessage = data.reply || "No response";
