@@ -10,23 +10,42 @@
   <pre id="response"></pre>
 
   <script>
+    // ✅ store the full chat history here
+    let chatHistory = [];
+
     async function sendMessage() {
       const input = document.getElementById('userInput').value;
+
+      // Add user message to history
+      chatHistory.push({
+        role: "user",
+        content: input
+      });
 
       const res = await fetch('/.netlify/functions/chat', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'  // ✅ Important fix!
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          messages: [{ role: "user", content: input }]
+          messages: chatHistory
         })
       });
 
       try {
         const data = await res.json();
-        document.getElementById('response').textContent =
-          data.choices?.[0]?.message?.content || "No response";
+
+        // Grab the AI's reply
+        const aiMessage = data.choices?.[0]?.message?.content || "No response";
+
+        // Add AI message to history
+        chatHistory.push({
+          role: "assistant",
+          content: aiMessage
+        });
+
+        document.getElementById('response').textContent = aiMessage;
+
       } catch (e) {
         document.getElementById('response').textContent = "Error parsing response.";
         console.error("Fetch error:", e);
@@ -35,4 +54,5 @@
   </script>
 </body>
 </html>
+
 
