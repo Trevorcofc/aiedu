@@ -93,18 +93,19 @@
 
     const inputField = document.getElementById("user-input");
     const userMessage = inputField.value.trim();
+
     if (!userMessage) return;
 
-    // Append user message to chat log visually
-    addMessageToChatLog(userMessage, "user-message");
+    // Append user's message to chat log visually
+    addMessageToChatLog(userMessage, "user");
 
-    // Add to history for backend
+    // Add to conversation history for backend
     chatHistory.push({
       role: "user",
       content: userMessage
     });
 
-    // Send entire conversation to backend
+    // Send full history to backend
     const res = await fetch("/.netlify/functions/chat", {
       method: "POST",
       headers: {
@@ -120,16 +121,16 @@
 
       const aiMessage = data.choices?.[0]?.message?.content || "No response";
 
-      // Add AI response to history
+      // Add AI message to history
       chatHistory.push({
         role: "assistant",
         content: aiMessage
       });
 
       // Append AI message to chat log visually
-      addMessageToChatLog(aiMessage, "ai-message");
+      addMessageToChatLog(aiMessage, "ai");
 
-      // Clear input field
+      // Clear the input box
       inputField.value = "";
 
     } catch (e) {
@@ -138,17 +139,20 @@
     }
   }
 
-  function addMessageToChatLog(message, className) {
+  function addMessageToChatLog(message, senderType) {
     const chatLog = document.getElementById("chat-log");
-    const messageBubble = document.createElement("div");
-    messageBubble.className = className;
-    messageBubble.textContent = message;
-    chatLog.appendChild(messageBubble);
 
-    // Optional: scroll to bottom
+    const bubble = document.createElement("div");
+    bubble.classList.add("chat-bubble", senderType);
+    bubble.textContent = message;
+
+    chatLog.appendChild(bubble);
+
+    // Scroll to bottom
     chatLog.scrollTop = chatLog.scrollHeight;
   }
 </script>
+
 
 </body>
 </html>
