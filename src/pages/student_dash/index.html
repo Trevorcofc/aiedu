@@ -86,58 +86,70 @@
   </div>
 
   <script>
-    // ✅ keep conversation history in memory
-    let chatHistory = [];
+  let chatHistory = [];
 
-    async function handleChat(event) {
-      event.preventDefault();
+  async function handleChat(event) {
+    event.preventDefault();
 
-      const inputField = document.getElementById("user-input");
-      const userMessage = inputField.value.trim();
+    const inputField = document.getElementById("user-input");
+    const userMessage = inputField.value.trim();
+    if (!userMessage) return;
 
-      if (!userMessage) return;
+    // Append user message to chat log visually
+    addMessageToChatLog(userMessage, "user-message");
 
-      // Add user message to history
+    // Add to history for backend
+    chatHistory.push({
+      role: "user",
+      content: userMessage
+    });
+
+    // Send entire conversation to backend
+    const res = await fetch("/.netlify/functions/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        messages: chatHistory
+      })
+    });
+
+    try {
+      const data = await res.json();
+
+      const aiMessage = data.choices?.[0]?.message?.content || "No response";
+
+      // Add AI response to history
       chatHistory.push({
-        role: "user",
-        content: userMessage
+        role: "assistant",
+        content: aiMessage
       });
 
-      const res = await fetch("/.netlify/functions/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          messages: chatHistory
-        })
-      });
+      // Append AI message to chat log visually
+      addMessageToChatLog(aiMessage, "ai-message");
 
-      try {
-        const data = await res.json();
+      // Clear input field
+      inputField.value = "";
 
-        const aiMessage = data.choices?.[0]?.message?.content || "No response";
-
-        // Add AI response to history
-        chatHistory.push({
-          role: "assistant",
-          content: aiMessage
-        });
-
-        // Append new message to chat log
-        const chatLog = document.getElementById("chat-log");
-        const messageElement = document.createElement("div");
-        messageElement.textContent = aiMessage;
-        chatLog.appendChild(messageElement);
-
-        inputField.value = "";
-
-      } catch (e) {
-        console.error("Error:", e);
-        alert("Something went wrong. See console for details.");
-      }
+    } catch (e) {
+      console.error("Error:", e);
+      alert("Something went wrong. See console for details.");
     }
-  </script>
+  }
+
+  function addMessageToChatLog(message, className) {
+    const chatLog = document.getElementById("chat-log");
+    const messageBubble = document.createElement("div");
+    messageBubble.className = className;
+    messageBubble.textContent = message;
+    chatLog.appendChild(messageBubble);
+
+    // Optional: scroll to bottom
+    chatLog.scrollTop = chatLog.scrollHeight;
+  }
+</script>
+
 </body>
 </html>
 
