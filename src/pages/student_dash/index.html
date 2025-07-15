@@ -144,7 +144,7 @@
 
     const bubble = document.createElement("div");
     bubble.classList.add("chat-bubble", senderType);
-    bubble.textContent = message;
+    bubble.innerHTML = message;
 
     chatLog.appendChild(bubble);
 
