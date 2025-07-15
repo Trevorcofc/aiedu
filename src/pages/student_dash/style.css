@@ -179,8 +179,12 @@ body {
   align-self: flex-start;
   background-color: #ffffff;
   color: #2d1557;
-  border: 1px solid #d9c9f2;
+  border: none;
+  border-radius: 16px;
+  padding: 12px 16px;
+  box-shadow: 0 0 12px rgba(217, 201, 242, 0.5);
 }
+
 
 /* NEW: Rich formatting inside AI bubbles */
 .chat-bubble.ai h2 {
