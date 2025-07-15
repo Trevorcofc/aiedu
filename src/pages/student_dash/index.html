@@ -120,7 +120,8 @@
     try {
       const data = await res.json();
 
-      const aiMessage = data.choices?.[0]?.message?.content || "No response";
+      const aiMessage = data.reply || "No response";
+
 
       // Add AI message to history
       chatHistory.push({
