@@ -61,10 +61,13 @@ Important:
 
     const data = await response.json();
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify(data),
-    };
+     return {
+       statusCode: 200,
+       body: JSON.stringify({
+       reply: data.choices?.[0]?.message?.content || "No response"
+       }),
+     };
+
 
   } catch (error) {
     console.error("Chat function error:", error);
