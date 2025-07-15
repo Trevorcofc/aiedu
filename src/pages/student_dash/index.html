@@ -63,7 +63,7 @@
     </main>
   </div>
 
-  <!-- Modals from your original file -->
+  <!-- Modals -->
   <div id="join-class-modal" class="modal">
     <div class="modal-content">
       <span class="close-btn" id="close-join-class">&times;</span>
@@ -85,9 +85,59 @@
     </div>
   </div>
 
-  <script src="../../js/chat.js"></script>
-  
-  <script type="module" src="../../js/student_dash.js"></script>
+  <script>
+    // ✅ keep conversation history in memory
+    let chatHistory = [];
+
+    async function handleChat(event) {
+      event.preventDefault();
+
+      const inputField = document.getElementById("user-input");
+      const userMessage = inputField.value.trim();
+
+      if (!userMessage) return;
+
+      // Add user message to history
+      chatHistory.push({
+        role: "user",
+        content: userMessage
+      });
+
+      const res = await fetch("/.netlify/functions/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          messages: chatHistory
+        })
+      });
+
+      try {
+        const data = await res.json();
+
+        const aiMessage = data.choices?.[0]?.message?.content || "No response";
+
+        // Add AI response to history
+        chatHistory.push({
+          role: "assistant",
+          content: aiMessage
+        });
+
+        // Append new message to chat log
+        const chatLog = document.getElementById("chat-log");
+        const messageElement = document.createElement("div");
+        messageElement.textContent = aiMessage;
+        chatLog.appendChild(messageElement);
+
+        inputField.value = "";
+
+      } catch (e) {
+        console.error("Error:", e);
+        alert("Something went wrong. See console for details.");
+      }
+    }
+  </script>
 </body>
 </html>
 
