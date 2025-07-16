@@ -9,7 +9,8 @@ body {
   font-family: 'Josefin Sans', sans-serif;
   height: 100vh;
   overflow: hidden;
-  background: radial-gradient(
+  background:
+    radial-gradient(
       120% 150% at 20% 30%,
       rgba(122, 79, 209, 0.3) 0%,
       transparent 60%
@@ -25,7 +26,21 @@ body {
       transparent 70%
     ),
     #f4f0fa;
+  background-repeat: no-repeat;
+  background-size: 100% 100%, 100% 100%, 100% 100%, cover;
+  background-position: 20% 30%, 80% 40%, 50% 80%, center;
+  animation: gradientShift 20s ease-in-out infinite alternate;
 }
+
+@keyframes gradientShift {
+  0% {
+    background-position: 20% 30%, 80% 40%, 50% 80%, center;
+  }
+  100% {
+    background-position: 25% 35%, 75% 45%, 55% 75%, center;
+  }
+}
+
 
 
 /* LAYOUT */
