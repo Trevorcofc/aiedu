@@ -51,6 +51,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const chatLog = document.getElementById("chat-log");
   const userInput = document.getElementById("user-input");
 
+  // Retrieve username from local storage
+  const username = localStorage.getItem("username");
+  if (username) {
+    // Update sidebar username
+    const sidebarUser = document.querySelector(".username");
+    if (sidebarUser) {
+      sidebarUser.textContent = username;
+    }
+
+    // Update welcome header if visible initially
+    const headerTitle = document.querySelector(".chat-header h1");
+    if (headerTitle) {
+      headerTitle.innerHTML = `Welcome,<br><span class="username-highlight">${username}</span>`;
+    }
+  }
+  //end of username retrieval from local storage 
+
   let currentClassContext = null;
 
   // Show Join Class modal
