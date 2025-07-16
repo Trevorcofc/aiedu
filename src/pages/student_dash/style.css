@@ -39,6 +39,36 @@ body {
   width: 100%;
   height: auto;
 }
+.speech-bubble {
+  position: absolute;
+  top: -10px; /* adjust this to move bubble higher or lower */
+  right: 100%; /* places it to the left of mascot */
+  background: rgba(255, 255, 255, 0.9);
+  color: #2d1557;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 0.95rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* little speech bubble arrow */
+.speech-bubble::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent transparent transparent rgba(255, 255, 255, 0.9);
+}
+
 
 
 /* SIDEBAR */
