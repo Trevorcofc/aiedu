@@ -21,17 +21,17 @@ body {
 /* SIDEBAR */
 .sidebar {
   width: 220px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   padding: 20px 15px;
   display: flex;
   flex-direction: column;
   justify-content: start;
+  border: none;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
 }
 
 .sidebar-header {
