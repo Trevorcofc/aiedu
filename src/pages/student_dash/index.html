@@ -34,9 +34,17 @@
       </nav>
     </aside>
 
+    <!-- Mascot -->
     <div class="mascot-container">
        <img src="../../assets/aiea.png" alt="Mascot" />
     </div>
+    <div class="mascot-container">
+      <img src="/images/mascot.png" alt="Mascot" />
+        <div class="speech-bubble" id="mascot-bubble">
+          Welcome to Ethicademy
+        </div>
+    </div>
+
 
     <!-- Main Content -->
     <main class="chat-main">
@@ -158,6 +166,25 @@
     chatLog.scrollTop = chatLog.scrollHeight;
   }
 </script>
+
+  <!-- JS for mascot bubble -->
+  <script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const bubble = document.getElementById("mascot-bubble");
+    if (!bubble) return;
+
+    setTimeout(() => {
+      bubble.style.opacity = "1";
+      bubble.style.transform = "translateX(0)";
+    }, 5000);
+
+    setTimeout(() => {
+      bubble.style.opacity = "0";
+      bubble.style.transform = "translateX(10px)";
+    }, 15000);
+  });
+</script>
+
 
 
 </body>
