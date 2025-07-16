@@ -236,8 +236,19 @@ body {
 }
 
 /* CHAT INPUT */
+
+.chat-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  gap: 8px;
+}
+
+
 .chat-form input {
   flex: 1;
+  min-width: 0;
   padding: 12px 14px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -255,26 +266,22 @@ body {
   color: rgba(45, 21, 87, 0.6);
 }
 
+
 .chat-form button {
-  background: rgba(122, 79, 209, 0.3);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background-color: #7a4fd1;
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: none;
   padding: 12px 20px;
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
-  margin-left: 8px;
   font-size: 1rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .chat-form button:hover {
-  background: rgba(122, 79, 209, 0.5);
+  background-color: #6636b4;
   transform: scale(1.05);
 }
-
 
 /* RIGHT PANEL */
 .suggested-panel {
