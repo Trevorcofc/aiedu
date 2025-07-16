@@ -7,40 +7,11 @@
 
 body {
   font-family: 'Josefin Sans', sans-serif;
+  background-color: #f4f0fa
   height: 100vh;
   overflow: hidden;
-  background:
-    radial-gradient(
-      120% 150% at 20% 30%,
-      rgba(122, 79, 209, 0.3) 0%,
-      transparent 60%
-    ),
-    radial-gradient(
-      100% 120% at 80% 40%,
-      rgba(102, 54, 180, 0.25) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      150% 150% at 50% 80%,
-      rgba(212, 197, 242, 0.2) 0%,
-      transparent 70%
-    ),
-    #f4f0fa;
-  background-repeat: no-repeat;
-  background-size: 100% 100%, 100% 100%, 100% 100%, cover;
-  background-position: 20% 30%, 80% 40%, 50% 80%, center;
-  animation: gradientShift 20s ease-in-out infinite alternate;
-}
 
-@keyframes gradientShift {
-  0% {
-    background-position: 20% 30%, 80% 40%, 50% 80%, center;
-  }
-  100% {
-    background-position: 25% 35%, 75% 45%, 55% 75%, center;
-  }
 }
-
 
 
 /* LAYOUT */
@@ -177,12 +148,7 @@ body {
   flex-direction: column;
   padding: 30px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  background-color: #f4f0fa;
 }
 
 /* CHAT LOG */
@@ -203,27 +169,24 @@ body {
   font-size: 1rem;
   line-height: 1.4;
   word-wrap: break-word;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  color: #2d1557;
 }
 
 .chat-bubble.user {
   align-self: flex-end;
-  /* Optional tint for user bubbles */
-  background: rgba(217, 201, 242, 0.2);
-  border: 1px solid rgba(217, 201, 242, 0.3);
+  background-color: #d9c9f2;
+  color: #2d1557;
 }
 
 .chat-bubble.ai {
   align-self: flex-start;
+  background-color: #ffffff;
+  color: #2d1557;
+  border: none;
+  border-radius: 16px;
+  padding: 12px 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   margin-left: 2px;
-  /* keep the same glass style as .chat-bubble base */
 }
-
 
 
 
@@ -318,6 +281,7 @@ body {
   color: #2d1557;
   font-size: 0.9rem;
 }
+
 
 
 
