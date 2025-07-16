@@ -20,6 +20,27 @@ body {
   height: 100vh;
 }
 
+/* MASCOT */
+
+.dashboard-container {
+  position: relative; /* anchor for absolute positioning */
+}
+
+.mascot-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 80px;
+  height: auto;
+  z-index: 1000;
+}
+
+.mascot-container img {
+  width: 100%;
+  height: auto;
+}
+
+
 /* SIDEBAR */
 .sidebar {
   width: 220px;
