@@ -169,6 +169,9 @@ body {
   font-size: 1rem;
   line-height: 1.4;
   word-wrap: break-word;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: bubbleFadeIn 0.3s ease forwards;
 }
 
 .chat-bubble.user {
@@ -186,6 +189,14 @@ body {
   padding: 12px 16px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   margin-left: 2px;
+}
+
+/* ANIMATIONS */
+@keyframes bubbleFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 
