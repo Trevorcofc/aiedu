@@ -7,10 +7,26 @@
 
 body {
   font-family: 'Josefin Sans', sans-serif;
-  background-color: #f4f0fa;
   height: 100vh;
   overflow: hidden;
+  background: radial-gradient(
+      120% 150% at 20% 30%,
+      rgba(122, 79, 209, 0.3) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      100% 120% at 80% 40%,
+      rgba(102, 54, 180, 0.25) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      150% 150% at 50% 80%,
+      rgba(212, 197, 242, 0.2) 0%,
+      transparent 70%
+    ),
+    #f4f0fa;
 }
+
 
 /* LAYOUT */
 .dashboard-container {
