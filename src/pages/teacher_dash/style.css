@@ -192,21 +192,15 @@ body {
   height: 100%;
   overflow: auto;
   background-color: rgba(0,0,0,0.5);
-  font-family: 'Josefin Sans', sans-serif; /* match dashboard font */
 }
 
 .modal-content {
-  background: rgba(255, 255, 255, 0.08); /* translucent glass-like */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background-color: #fff;
   margin: 10% auto;
   padding: 20px;
   width: 300px;
-  border-radius: 10px; /* slightly more modern */
-  border: 1px solid rgba(255, 255, 255, 0.15); /* light border like suggested-panel */
-  color: #2d1557; /* match your dashboard text color */
+  border-radius: 5px;
 }
-
 
 .close-btn {
   float: right;
