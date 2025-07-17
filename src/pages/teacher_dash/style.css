@@ -190,67 +190,28 @@ body {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+  font-family: 'Josefin Sans', sans-serif; /* match dashboard font */
 }
 
-/* Updated modal-content to match suggested-panel aesthetic */
 .modal-content {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.08); /* translucent glass-like */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  padding: 30px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  width: 90%;
-  max-width: 500px;
-  color: #2d1557;
-  font-family: 'Josefin Sans', sans-serif;
+  margin: 10% auto;
+  padding: 20px;
+  width: 300px;
+  border-radius: 10px; /* slightly more modern */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* light border like suggested-panel */
+  color: #2d1557; /* match your dashboard text color */
 }
 
-/* Close Button */
+
 .close-btn {
   float: right;
   font-size: 24px;
-  color: #fff;
   cursor: pointer;
 }
 
-/* Form Styling */
-.modal-content form label {
-  display: block;
-  margin: 15px 0 5px;
-  font-weight: bold;
-}
-
-.modal-content form input,
-.modal-content form textarea {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  background: rgba(255, 255, 255, 0.2);
-  color: #2d1557;
-  margin-bottom: 10px;
-}
-
-.modal-content form button {
-  background-color: #5a32a3;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-}
-
-.modal-content form button:hover {
-  background-color: #47268a;
-}
 
