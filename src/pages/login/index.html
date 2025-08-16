@@ -1,3 +1,4 @@
+<!-- src/pages/login/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,34 +10,35 @@
 </head>
 <body>
   <div class="container">
-    <div class="logo">
-      <!-- Replace with real logo later -->
-      <img src="../../assets/aiedu_logo.png" alt="Ethicademy Logo" />
-    </div>
+    <div class="logo"><img src="../../assets/aiedu_logo.png" alt="Ethicademy Logo" /></div>
     <h1 class="site-title">Ethicademy</h1>
-    
+
     <div class="login-box">
       <h2>Login</h2>
-      <form onsubmit="login(event)">
-        <input type="text" id="username" placeholder="Username" required />
+      <form id="loginForm">
+        <input type="email" id="username" placeholder="Email" required />
         <input type="password" id="password" placeholder="Password" required />
-      <div class="button-group">
-        <button type="button" onclick="login('student')">Login Student</button>
-        <button type="button" onclick="login('teacher')">Login Teacher</button>
-      </div>
+        <div class="button-group">
+          <button type="button" id="studentBtn">Login Student</button>
+          <button type="button" id="teacherBtn">Login Teacher</button>
+        </div>
       </form>
-
-<script src="../../js/main.js"></script>
-
     </div>
 
     <div class="signup-box">
       <p>New here?<br/>
         <a href="create_account.html">Welcome, click here to create an account</a>
-
       </p>
     </div>
   </div>
-  <script src="../../js/main.js"></script>
+
+  <script type="module" src="../../js/firebase.js"></script>
+  <script type="module" src="../../js/auth.js"></script>
+  <script type="module">
+    import "../..//js/auth.js";
+    document.getElementById("studentBtn").addEventListener("click", (e)=> window.__auth.handleLogin(e, "student"));
+    document.getElementById("teacherBtn").addEventListener("click", (e)=> window.__auth.handleLogin(e, "teacher"));
+  </script>
 </body>
 </html>
+
