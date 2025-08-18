@@ -35,15 +35,12 @@
  <script type="module" src="../../js/firebase.js"></script>
 <script type="module" src="../../js/auth.js"></script>
 <script type="module">
-  // No import here. auth.js already attached window.__auth.
   window.addEventListener('DOMContentLoaded', () => {
-    const studentBtn = document.getElementById("studentBtn");
-    const teacherBtn = document.getElementById("teacherBtn");
-
-    if (studentBtn) studentBtn.addEventListener("click", (e) => window.__auth.handleLogin(e, "student"));
-    if (teacherBtn) teacherBtn.addEventListener("click", (e) => window.__auth.handleLogin(e, "teacher"));
+    document.getElementById("studentBtn")?.addEventListener("click", (e) => window.__auth.handleLogin(e, "student"));
+    document.getElementById("teacherBtn")?.addEventListener("click", (e) => window.__auth.handleLogin(e, "teacher"));
   });
 </script>
+
 </body>
 </html>
 
