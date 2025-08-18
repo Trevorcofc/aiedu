@@ -1,11 +1,11 @@
 <!-- src/js/firebase.js -->
 <script type="module">
-  // Replace the config below with the one from Firebase console
+  
   export const firebaseConfig = {
-    apiKey: "YOUR_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    appId: "YOUR_APP_ID",
+    apiKey: "AIzaSyAN5bczyFGapDT9vcqOAxI473SLUDfSHxA",
+    authDomain: "ethicadmey.firebaseapp.com",
+    projectId: "ethicadmey",
+    appId: "1:281835928268:web:49d817295d84b409c6e069",
   };
 </script>
 
