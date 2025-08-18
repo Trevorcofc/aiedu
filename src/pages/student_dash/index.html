@@ -7,13 +7,36 @@
   <title>Ethicademy Dashboard</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+
+  <!-- Firebase + Auth (correct relative paths) -->
+  <script type="module" src="../../js/firebase.js"></script>
+  <script type="module" src="../../js/auth.js"></script>
+
+  <!-- Gate the page to verified users -->
+  <script type="module">
+    window.__auth.requireAuthAndVerified("../login/index.html");
+  </script>
+
+  <!-- Populate username once authed -->
+  <script type="module">
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (!user) return;
+      const name = user.displayName || user.email || "student";
+      const sidebarName = document.querySelector(".username");
+      const headerName = document.querySelector(".username-highlight");
+      if (sidebarName) sidebarName.textContent = name;
+      if (headerName) headerName.textContent = name;
+    });
+  </script>
 </head>
 <body>
   <div class="dashboard-container">
     <!-- Sidebar -->
     <aside class="sidebar">
       <div class="sidebar-header">
-        <a href="/src/pages/login/index.html">
+        <a href="../login/index.html">
           <img src="../../assets/aiedu_logo.png" alt="Logo" class="sidebar-logo" />
         </a>
         <div class="username">&lt;user&gt;</div>
@@ -36,21 +59,20 @@
 
     <!-- Mascot -->
     <div class="mascot-container">
-       <img src="../../assets/aiea.png" alt="Mascot" />
+      <img src="../../assets/aiea.png" alt="Mascot" />
     </div>
     <div class="mascot-container">
       <img src="../../assets/aiea.png" alt="Mascot" />
-        <div class="speech-bubble" id="mascot-bubble">
-          Welcome to Ethicademy!
-        </div>
+      <div class="speech-bubble" id="mascot-bubble">
+        Welcome to Ethicademy!
+      </div>
     </div>
-
 
     <!-- Main Content -->
     <main class="chat-main">
       <header class="chat-header">
-       <h1>Welcome, <span class="username-highlight">&lt;username&gt;</span></h1>
-  </header>
+        <h1>Welcome, <span class="username-highlight">&lt;username&gt;</span></h1>
+      </header>
 
       <div class="chat-container">
         <!-- Chat messages panel -->
@@ -99,98 +121,78 @@
   </div>
 
   <script>
-  let chatHistory = [];
+    let chatHistory = [];
 
-  async function handleChat(event) {
-    event.preventDefault();
+    async function handleChat(event) {
+      event.preventDefault();
 
-    const inputField = document.getElementById("user-input");
-    const userMessage = inputField.value.trim();
+      const inputField = document.getElementById("user-input");
+      const userMessage = inputField.value.trim();
 
-    if (!userMessage) return;
+      if (!userMessage) return;
 
-    // Append user's message to chat log visually
-    addMessageToChatLog(userMessage, "user");
+      // Append user's message to chat log visually
+      addMessageToChatLog(userMessage, "user");
 
-    // Add to conversation history for backend
-    chatHistory.push({
-      role: "user",
-      content: userMessage
-    });
-
-    // Send full history to backend
-    const res = await fetch("/.netlify/functions/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        messages: chatHistory
-      })
-    });
-
-    try {
-      const data = await res.json();
-
-      const aiMessage = data.reply || "No response";
-
-
-      // Add AI message to history
+      // Add to conversation history for backend
       chatHistory.push({
-        role: "assistant",
-        content: aiMessage
+        role: "user",
+        content: userMessage
       });
 
-      // Append AI message to chat log visually
-      addMessageToChatLog(aiMessage, "ai");
+      // Send full history to backend
+      const res = await fetch("/.netlify/functions/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: chatHistory })
+      });
 
-      // Clear the input box
-      inputField.value = "";
+      try {
+        const data = await res.json();
+        const aiMessage = data.reply || "No response";
 
-    } catch (e) {
-      console.error("Error:", e);
-      alert("Something went wrong. See console for details.");
+        // Add AI message to history
+        chatHistory.push({ role: "assistant", content: aiMessage });
+
+        // Append AI message to chat log visually
+        addMessageToChatLog(aiMessage, "ai");
+
+        // Clear the input box
+        inputField.value = "";
+      } catch (e) {
+        console.error("Error:", e);
+        alert("Something went wrong. See console for details.");
+      }
     }
-  }
 
-  function addMessageToChatLog(message, senderType) {
-    const chatLog = document.getElementById("chat-log");
-
-    const bubble = document.createElement("div");
-    bubble.classList.add("chat-bubble", senderType);
-    bubble.innerHTML = message;
-
-    chatLog.appendChild(bubble);
-
-    // Scroll to bottom
-    chatLog.scrollTop = chatLog.scrollHeight;
-  }
-</script>
+    function addMessageToChatLog(message, senderType) {
+      const chatLog = document.getElementById("chat-log");
+      const bubble = document.createElement("div");
+      bubble.classList.add("chat-bubble", senderType);
+      bubble.innerHTML = message;
+      chatLog.appendChild(bubble);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+  </script>
 
   <!-- JS for mascot bubble -->
   <script>
-  window.addEventListener("DOMContentLoaded", () => {
-    const bubble = document.getElementById("mascot-bubble");
-    if (!bubble) return;
+    window.addEventListener("DOMContentLoaded", () => {
+      const bubble = document.getElementById("mascot-bubble");
+      if (!bubble) return;
 
-    setTimeout(() => {
-      bubble.style.opacity = "1";
-      bubble.style.transform = "translateX(0)";
-    }, 5000);
+      setTimeout(() => {
+        bubble.style.opacity = "1";
+        bubble.style.transform = "translateX(0)";
+      }, 5000);
 
-    setTimeout(() => {
-      bubble.style.opacity = "0";
-      bubble.style.transform = "translateX(10px)";
-    }, 15000);
-  });
-</script>
-
-
-
-
-
+      setTimeout(() => {
+        bubble.style.opacity = "0";
+        bubble.style.transform = "translateX(10px)";
+      }, 15000);
+    });
+  </script>
 </body>
 </html>
-
 
 
